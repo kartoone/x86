@@ -3,14 +3,12 @@ prompt: .string "Enter a number: "  # printf("Enter a number:");
 answer: .string "%d + %d = %d\n"    # printf("%d + %d = %d\n", ...)
 scanformat: .string "%dl"            # scanf("%dl", ...)
 
-.section .data
-num1: .quad 0
-num2: .quad 0
-
 .text
 .globl main
 main:
   push %rbp             # align the stack (all programs need this)
+
+  add $-16, %rsp        # make room on the stack for our two longs
 
   # prompt for first number
   xor %eax, %eax        # zero out %al for our call to printf
@@ -19,7 +17,7 @@ main:
 
   # read the first number from the console
   leaq scanformat(%rip), %rdi
-  leaq num1(%rip), %rsi
+  leaq 8(%rsp), %rsi
   call scanf@PLT
 
   # prompt for second number
@@ -28,12 +26,12 @@ main:
 
   # read the second number from the console
   leaq scanformat(%rip), %rdi
-  leaq num2(%rip), %rsi
+  movq %rsp, %rsi
   call scanf@PLT
 
   # get the numbers from memory into registers we need to use for call to printf
-  movq num1(%rip), %rsi
-  movq num2(%rip), %rdx
+  movq 8(%rsp), %rsi
+  movq (%rsp), %rdx
   add %rsi, %rdx
 
   # display the answer
@@ -47,9 +45,11 @@ main:
   movq %rdx, %rcx
 
   # 4. put number 2 into %rdx (again)
-  movq num2(%rip), %rdx
+  movq (%rsp), %rdx
   call printf@PLT
 
-  mov $0, %rax      # set our return value register to indicate we exited normally
+  add $16, %rsp      # readjust the stack to what it was when we were called
+
+  mov $7, %rax      # set our return value register to indicate we exited normally
   pop %rbp          # realign the stack for the OS
   ret
