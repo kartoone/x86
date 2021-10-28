@@ -1,5 +1,5 @@
 .section .rodata
-str1: .string "hello, assembly, %d!\n"
+str1: .string "hello, assembly, %d !\n"
 
 .text
 .globl main
