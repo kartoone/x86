@@ -32,7 +32,7 @@ main:
   leaq num2(%rip), %rsi
   call scanf@PLT
 
-  # get the numbers from memory into registers we need to use for call to printf
+  # prepare the registers for our loop 
   movq num1(%rip), %r12   # %r12: num1
   movq num2(%rip), %r13   # %r13: num2
   movq %r12, %r14         # %r14: i ... note that this is essentially: i=num1;
