@@ -2,7 +2,7 @@
 prompt: .string "Enter a number: "  # printf("Enter a number:");
 answer: .string "The sum of the numbers between %d (inclusive) and %d (inslusive) = %d\n"    # printf("%d + %d = %d\n", ...)
 scanformat: .string "%dl"            # scanf("%dl", ...)
-iprintformat: .string "i:%d\n"        # printf("%d\n", i);
+iprintformat: .string "i:%d\n"        # printf("i:%d\n", i);
 
 .section .data
 num1: .quad 0
