@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 /*
 	weather.c - program demonstrating file i/o and loops and if statements
@@ -8,10 +9,24 @@
 
 int main() {
 	FILE *fp;
-    int num;
-	fp = fopen("nums.txt", "r");
-	while (fscanf(fp, "%d", &num)==1) {
-		printf("%d\n", num);
+  int temp;			// the current temperature we are analyzing
+	int hightemp; // our threshold for what is considered "hot"
+	int lowtemp;  // our threshold for what is considered "cold"
+  char intensity[5];
+	printf("What do you consider HOT? ");
+	scanf("%d",&hightemp);
+	printf("What do you consider COLD? ");
+	scanf("%d",&lowtemp);
+	fp = fopen("temps.txt", "r");
+	while (fscanf(fp, "%d", &temp)==1) {
+		if (temp > hightemp) {
+			strcpy(intensity, "HOT");
+		} else if (temp < lowtemp) {
+			strcpy(intensity, "COLD");
+		} else {
+			strcpy(intensity, "MILD");
+		}
+		printf("%d %s\n", temp, intensity);
 	}
 	fclose(fp);
 	return 0;
