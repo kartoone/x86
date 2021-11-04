@@ -1,3 +1,5 @@
+# adds 1 + 2 together and returns the result
+
 .text
 .globl main
 main:

@@ -13,6 +13,7 @@ main:
   push %rbp             # align the stack (all programs need this)
 
   # prompt for first number
+
   xor %eax, %eax        # zero out %al for our call to printf
   leaq prompt(%rip), %rdi
   call printf@PLT       # printf("Enter a number: ");
@@ -20,7 +21,7 @@ main:
   # read the first number from the console
   leaq scanformat(%rip), %rdi
   leaq num1(%rip), %rsi
-  call scanf@PLT
+  call scanf@PLT        # scanf("%dl", &num1)
 
   # prompt for second number
   leaq prompt(%rip), %rdi
